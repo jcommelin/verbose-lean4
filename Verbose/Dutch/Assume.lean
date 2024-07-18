@@ -2,59 +2,60 @@ import Verbose.Dutch.Fix
 
 open Lean Elab Tactic
 
-syntax "Supposons₁ " colGt assumeDecl : tactic
-syntax "Supposons " "que"? (colGt assumeDecl)+ : tactic
-syntax "Supposons " "par l'absurde " (colGt assumeDecl) : tactic
+syntax "Neem aan dat₁ " colGt assumeDecl : tactic
+syntax "Neem aan dat " (colGt assumeDecl)+ : tactic
+-- syntax "Neem " (colGt assumeDecl)+ "aan" : tactic
+syntax "Uit het ongerijmde. " "Neem aan dat " (colGt assumeDecl) : tactic
 
 elab_rules : tactic
-  | `(tactic| Supposons₁ $x:ident) => Assume1 (introduced.bare x x.getId)
+  | `(tactic| Neem aan dat₁ $x:ident) => Assume1 (introduced.bare x x.getId)
 
 elab_rules : tactic
-  | `(tactic| Supposons₁ $x:ident : $type) =>
+  | `(tactic| Neem aan dat₁ $x:ident : $type) =>
     Assume1 (introduced.typed (mkNullNode #[x, type]) x.getId type)
 
 
 elab_rules : tactic
-  | `(tactic| Supposons₁ ( $decl:assumeDecl )) => do evalTactic (← `(tactic| Supposons₁ $decl:assumeDecl))
+  | `(tactic| Neem aan dat₁ ( $decl:assumeDecl )) => do evalTactic (← `(tactic| Neem aan dat₁ $decl:assumeDecl))
 
 macro_rules
-  | `(tactic| Supposons $[que]? $decl:assumeDecl) => `(tactic| Supposons₁ $decl)
-  | `(tactic| Supposons $[que]? $decl:assumeDecl $decls:assumeDecl*) => `(tactic| Supposons₁ $decl; Supposons $decls:assumeDecl*)
+  | `(tactic| Neem aan dat $decl:assumeDecl) => `(tactic| Supposons₁ $decl)
+  | `(tactic| Neem aan dat $decl:assumeDecl $decls:assumeDecl*) => `(tactic| Neem aan dat₁ $decl; Neem aan dat $decls:assumeDecl*)
 
 elab_rules : tactic
-  | `(tactic| Supposons par l'absurde $x:ident : $type) => forContradiction x.getId type
+  | `(tactic| Uit het ongerijmede. Neem aan dat $x:ident : $type) => forContradiction x.getId type
 
 setLang fr
 
 example (P Q : Prop) : P → Q → True := by
-  Supposons hP (hQ : Q)
+  Neem aan dat hP (hQ : Q)
   trivial
 
 example (P Q : Prop) : P → Q → True := by
-  Supposons que hP (hQ : Q)
+  Neem aan dat hP (hQ : Q)
   trivial
 
 example (n : Nat) : 0 < n → True := by
-  Supposons que hn
+  Neem aan dat hn
   trivial
 
 example : ∀ n > 0, true := by
-  success_if_fail_with_msg "Il n’y a pas d’hypothèse à introduire ici."
-    Supposons n
+  success_if_fail_with_msg "Er is hier geen aanname die aangenomen kan worden."
+    Neem aan dat n
   intro n
-  Supposons H : n > 0
+  Neem aan dat H : n > 0
   trivial
 
 
 example (P Q : Prop) (h : ¬ Q → ¬ P) : P → Q := by
-  Supposons hP
-  Supposons par l'absurde hnQ :¬ Q
+  Neem aan dat hP
+  Uit het ongerijmede. Neem aan dat hnQ :¬ Q
   exact h hnQ hP
 
 
 example (P Q : Prop) (h : ¬ Q → ¬ P) : P → Q := by
-  Supposons hP
-  Supposons par l'absurde hnQ : ¬ Q
+  Neem aan dat hP
+  Uit het ongerijmde. Neem aan dat hnQ : ¬ Q
   exact h hnQ hP
 
 
