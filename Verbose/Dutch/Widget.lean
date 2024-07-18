@@ -1,5 +1,5 @@
 import Verbose.Tactics.Widget
-import Verbose.French.Help
+import Verbose.Dutch.Help
 
 namespace Verbose.French
 open Lean Meta Server

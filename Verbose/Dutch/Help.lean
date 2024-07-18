@@ -1,5 +1,5 @@
 import Verbose.Tactics.Help
-import Verbose.French.Tactics
+import Verbose.Dutch.Tactics
 
 open Lean Meta Elab Tactic Term Verbose
 

@@ -1,5 +1,5 @@
 import Verbose.Tactics.By
-import Verbose.French.Common
+import Verbose.Dutch.Common
 
 namespace Verbose.French
 

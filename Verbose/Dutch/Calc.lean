@@ -1,5 +1,5 @@
 import Verbose.Tactics.Calc
-import Verbose.French.Common
+import Verbose.Dutch.Common
 
 namespace Lean.Elab.Tactic
 open Meta Verbose French

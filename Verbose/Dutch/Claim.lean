@@ -1,5 +1,5 @@
 import Verbose.Tactics.Lets
-import Verbose.French.Common
+import Verbose.Dutch.Common
 
 open Lean Verbose.French
 

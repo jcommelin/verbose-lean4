@@ -1,5 +1,5 @@
 import Verbose.Tactics.Since
-import Verbose.French.Common
+import Verbose.Dutch.Common
 import Lean
 
 namespace Verbose.French

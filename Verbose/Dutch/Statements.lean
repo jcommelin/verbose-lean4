@@ -1,5 +1,5 @@
 import Verbose.Tactics.Statements
-import Verbose.French.Widget
+import Verbose.Dutch.Widget
 
 import ProofWidgets.Demos.Macro
 
